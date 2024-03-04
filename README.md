@@ -4,7 +4,7 @@
 музиканта що вміє грати на цих інструментах.
 Клас Musician містить публічні поля name та listOfPlayableInstruments.
 listOfPlayableInstruments є незмінним списком що містить класи, які наслідують від InstrumentInterface;
-Метод SetNewInstruments задає списокlistOfPlayableInstruments.
+Метод SetNewInstruments задає список listOfPlayableInstruments.
 Метод PlayInstrument приймає як параметр instrumentToPlay що імплементує InstrumentInterface 
 та перевірає на співпадіння інтерфейси instrumentToPlay та елементи списку listOfPlayableInstruments.
 Якщо такі співпадіння находяться то викликається метод PLay() параметра instrumentToPlay;
