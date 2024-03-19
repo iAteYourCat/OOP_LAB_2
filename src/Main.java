@@ -20,13 +20,11 @@ public class Main {
 
 		musician.name = name == "" ? musician.name : name;
 		musician.SetNewInstrumans(InstrumentConst.CreateListOfInstrumance());
-
 		InstrumentConst.breakPoint = false;
 		while (true) {
 			System.out.println("What instruments " + musician.name + " should play\n" + "1.Instrument\n" + "2.Guitar\n"
 					+ "3.ElectroGuitar\n" + "4.end");
 			try {
-
 				int n = scanner.nextInt();
 				musician.PlayInstrument(InstrumentConst.GetInstrument(n));
 
@@ -39,7 +37,6 @@ public class Main {
 			if (InstrumentConst.breakPoint)
 				break;
 		}
-
 		scanner.close();
 	}
 
@@ -52,7 +49,8 @@ public class Main {
 
 		/**
 		 * 
-		 * @return List of uniq interfaces that represents types of musical instruments
+		 * @return List of unique interfaces that represents types of musical
+		 *         instruments
 		 */
 		static List<InstrumentInterface> CreateListOfInstrumance() {
 			LinkedHashSet<InstrumentInterface> listToReturn = new LinkedHashSet<InstrumentInterface>();
@@ -62,7 +60,6 @@ public class Main {
 				System.out.println("Choose which instruments " + musician.name + " can play\n" + "1.Instrument\n"
 						+ "2.Guitar\n" + "3.ElectroGuitar\n" + "4.end");
 				try {
-
 					int input = scanner.nextInt();
 					listToReturn.add(GetInstrument(input));
 
@@ -71,11 +68,9 @@ public class Main {
 					if (!breakPoint)
 						scanner.next();
 				}
-
 				if (breakPoint)
 					break;
 			}
-
 			return List.copyOf(listToReturn);
 		}
 
