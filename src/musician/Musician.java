@@ -22,7 +22,7 @@ public class Musician {
 	 * 
 	 * @param list
 	 */
-	public void SetNewInstrumans(Collection<? extends InstrumentInterface> list) {
+	public void SetNewInstruments(Collection<? extends InstrumentInterface> list) {
 		this.listOfPlayableInstruments = List.copyOf(list);
 	}
 

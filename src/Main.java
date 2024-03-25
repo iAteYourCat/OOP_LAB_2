@@ -6,44 +6,60 @@ import instruments.ElectroGuitar;
 import instruments.Guitar;
 import instruments.Instrument;
 import music_instrument_interfaces.InstrumentInterface;
+import music_instrument_interfaces.Wind_Instrument;
 import musician.Musician;
 
 public class Main {
 
 	static Scanner scanner = new Scanner(System.in);
 	static Musician musician = new Musician();
+	
+	
 
 	public static void main(String[] args) {
 
-		System.out.println("Choose musician name");
-		String name = scanner.nextLine().strip();
+		// Локальний клас
+		class LocalClass {
+			static void InteractWithUser() {
+				musician.SetNewInstruments(InstrumentConst.CreateListOfInstrumance());
+				
+				InstrumentConst.breakPoint = false;
+				while(true)
+				{
+					System.out.println("Choose which instruments " + musician.name + " should play\n" + "1.Instrument\n"
+							+ "2.Guitar\n" + "3.ElectroGuitar\n" + "4.WindInstrument\n" + "5.Exit");
+					
+					try {
+						int input = scanner.nextInt();
+						musician.PlayInstrument( InstrumentConst.GetInstrument(input));
 
-		musician.name = name == "" ? musician.name : name;
-		musician.SetNewInstrumans(InstrumentConst.CreateListOfInstrumance());
-		InstrumentConst.breakPoint = false;
-		while (true) {
-			System.out.println("What instruments " + musician.name + " should play\n" + "1.Instrument\n" + "2.Guitar\n"
-					+ "3.ElectroGuitar\n" + "4.end");
-			try {
-				int n = scanner.nextInt();
-				musician.PlayInstrument(InstrumentConst.GetInstrument(n));
-
-			} catch (Exception e) {
-				System.out.println(e);
-				if (!InstrumentConst.breakPoint)
-					scanner.next();
+					} catch (Exception e) {
+						System.out.println(e);
+						if (!InstrumentConst.breakPoint)
+							scanner.next();
+					}
+					if(InstrumentConst.breakPoint)break;
+				}
+				
 			}
-
-			if (InstrumentConst.breakPoint)
-				break;
 		}
-		scanner.close();
+		LocalClass.InteractWithUser();
+		
+		
 	}
-
+	//Внутрішній клас
 	public static class InstrumentConst {
 		final static public Instrument instrument = new Instrument();
 		final static public Guitar guitar = new Guitar();
 		final static public ElectroGuitar electroGuitar = new ElectroGuitar();
+		final static public Wind_Instrument windInstrument = new Wind_Instrument() {
+			
+			@Override
+			public void Play() {
+				System.out.println("Wind instrument is playing");
+				
+			}
+		};
 
 		private static boolean breakPoint = false;
 
@@ -58,7 +74,7 @@ public class Main {
 			breakPoint = false;
 			while (true) {
 				System.out.println("Choose which instruments " + musician.name + " can play\n" + "1.Instrument\n"
-						+ "2.Guitar\n" + "3.ElectroGuitar\n" + "4.end");
+						+ "2.Guitar\n" + "3.ElectroGuitar\n" + "4.WindInstrument\n" + "5.Exit");
 				try {
 					int input = scanner.nextInt();
 					listToReturn.add(GetInstrument(input));
@@ -92,12 +108,15 @@ public class Main {
 			case 3: {
 				return electroGuitar;
 			}
-			case 4: {
+			case 4:{
+				return windInstrument;
+			}
+			case 5: {
 				breakPoint = true;
-				throw new Exception("Exit");
+				throw new Exception("Exit\n");
 			}
 			default:
-				throw new IllegalArgumentException("Unexpected value: " + id);
+				throw new IllegalArgumentException("Unexpected value: " + id + '\n');
 			}
 		}
 	}
