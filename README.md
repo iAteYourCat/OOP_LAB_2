@@ -1,15 +1,16 @@
 
-# Лабораторна робота 1 (11 - 12)
+# Лабораторна робота 2 (13)
 
 ## Тема: Інтерфейси як верхній рівень абстакції.
 
 ### Завдання
 
-Створити програму яка міститиме набір класів що представлятимуть музичні інструменти
-та набір класів що представлятимуть музикантів котрі вміють грати на конкретних інструментах,
-певних видах музичних інструментів.
-(Наприклад якщо музикант грає на фортепіано то він зіграє і на синтезаторі т.д.)  
-Забезпечити програму зрозумілим та зручним меню.
+Спроектувати та реалізувати програму (вільна тема, будь яка область)  
+для демонстрації використання вкладених класів (внутрішніх, статичних вкладених, 
+локальних (в методі) та безіменних).    
+Додатково: програма повинна мати завершений вигляд.  
+
+За основу було взято минулу лабораторну.  
 
 ------
 
@@ -31,7 +32,7 @@
 
 - **Electronic_Instrument**.  
 Представляє собою електронні інструменти.
-
+  
 ---
 
 ### Класи музичних інтерфейсів
@@ -145,8 +146,9 @@ public void PlayInstrument(InstrumentInterface instrumentToPlay) {
 	>Choose which instruments Musician can play  
 	>1.Instrument  
 	>2.Guitar  
-	>3.ElectroGuitar  
-	>4.end  
+	>3.ElectroGuitar
+ 	>4.WindInstrument	
+	>5.end  
 	---
 	```Java 
 	static List<InstrumentInterface> CreateListOfInstrumance() {
@@ -197,42 +199,43 @@ public void PlayInstrument(InstrumentInterface instrumentToPlay) {
 	```
 ---
 ### Метод main
-Реалізує логіку взаємодії з користувачем. 
-- Спершу програма просить користувача задати ім'я музиканту.  
-- Далі іде створення списку інструментів на яких зможе грати музикант.  
-- Далі, поки користувач на натисне `4`, програма буде давати запит на ввід та виводити наступне повідомлення : 
+Реалізує логіку взаємодії з користувачем.  
+- Iде створення списку інструментів на яких зможе грати музикант.  
+- Далі, поки користувач на натисне `5`, програма буде давати запит на ввід та виводити наступне повідомлення : 
 	>What instruments Musician should play  
 	>1.Instrument   
 	>2.Guitar  
-	>3.ElectroGuitar  
-	>4.end
+	>3.ElectroGuitar
+ 	>4.WindInstrument  
+	>5.end
 
 ```java
-public static void main(String[] args) {
+	// Локальний клас
+		class LocalClass {
+			static void InteractWithUser() {
+				musician.SetNewInstruments(InstrumentConst.CreateListOfInstrumance());
+				
+				InstrumentConst.breakPoint = false;
+				while(true)
+				{
+					System.out.println("Choose which instruments " + musician.name + " should play\n" + "1.Instrument\n"
+							+ "2.Guitar\n" + "3.ElectroGuitar\n" + "4.WindInstrument\n" + "5.Exit");
+					
+					try {
+						int input = scanner.nextInt();
+						musician.PlayInstrument( InstrumentConst.GetInstrument(input));
 
-		System.out.println("Choose musician name");
-		String name = scanner.nextLine().strip();
-
-		musician.name = name == "" ? musician.name : name;
-		musician.SetNewInstrumans(InstrumentConst.CreateListOfInstrumance());
-		InstrumentConst.breakPoint = false;
-		while (true) {
-			System.out.println("What instruments " + musician.name + " should play\n" + "1.Instrument\n" + "2.Guitar\n"
-					+ "3.ElectroGuitar\n" + "4.end");
-			try {
-				int n = scanner.nextInt();
-				musician.PlayInstrument(InstrumentConst.GetInstrument(n));
-
-			} catch (Exception e) {
-				System.out.println(e);
-				if (!InstrumentConst.breakPoint)
-					scanner.next();
+					} catch (Exception e) {
+						System.out.println(e);
+						if (!InstrumentConst.breakPoint)
+							scanner.next();
+					}
+					if(InstrumentConst.breakPoint)break;
+				}
+				
 			}
-
-			if (InstrumentConst.breakPoint)
-				break;
 		}
-		scanner.close();
-	}
+		LocalClass.InteractWithUser();
+		
 ```
 ----
